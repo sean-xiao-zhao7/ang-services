@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AccountService } from './services/account.service';
 
 @Component({
@@ -7,16 +7,12 @@ import { AccountService } from './services/account.service';
   styleUrls: ['./app.component.css'],
   providers: [AccountService],
 })
-export class AppComponent {
-  accounts: { name: string; status: string }[] = this.accountService.accounts;
+export class AppComponent implements OnInit {
+  accounts: { name: string; status: string }[] = [];
 
   constructor(private accountService: AccountService) {}
 
-  onAccountAdded(newAccount: { name: string; status: string }) {
-    this.accountService.addAccount(newAccount);
-  }
-
-  onStatusChanged(updateInfo: { id: number; newStatus: string }) {
-    this.accountService.changeStatus(updateInfo);
+  ngOnInit(): void {
+    this.accounts = this.accountService.accounts;
   }
 }
